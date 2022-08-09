@@ -38,7 +38,7 @@
             position: absolute;
             left: 50%;
             right: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
         }
 
     </style>
@@ -50,16 +50,23 @@
 
 <h1>欢迎来到在线交流系统</h1>
 
+
 <div id="loginDiv">
 
-    <form action="/base/login" method="post" id="a_form">
 
-        <input type="text" name="name" placeholder="请输入账户" class="aaaaa" style="margin: auto">
+    <form action="${pageContext.request.contextPath}/base/login" method="post" id="a_form">
+
+        <label>账户名：</label><input type="text" name="name" placeholder="请输入账户" class="aaaaa" style="margin: auto">
         <p>
-            <input type="password" name="password" placeholder="请输入密码" class="aaaaa" style="margin: auto">
+            <label>密码：</label><input type="password" name="password" placeholder="请输入密码" class="aaaaa"
+                                     style="margin: auto">
         <p>
             <input type="submit" value="登录" class="aaaaa" style="margin: auto">
     </form>
+    <b id=></b>
 </div>
+<script>
+    var
+</script>
 </body>
 </html>

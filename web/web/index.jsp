@@ -7,5 +7,5 @@
 <h1>等我回来带你开挖掘机</h1>
 
 </body>
-<jsp:forward page="/base/login"></jsp:forward>
+<jsp:forward page="/base/index"></jsp:forward>
 </html>
