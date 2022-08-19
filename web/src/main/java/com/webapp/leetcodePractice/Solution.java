@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.webapp.entity.TreeNode;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 class Solution {
     public static void main(String[] args) {
@@ -20,9 +21,10 @@ class Solution {
 //        forFor();
 //        System.out.println(reverse(-2147483412));
 //        System.out.println(myAtoi("2147483648"));
-        System.out.println(maxEqualFreq(new int[]{1, 2}));
+//        System.out.println(maxEqualFreq(new int[]{1, 2}));
 //        System.out.println(myAtoi("-2147483648"));
 //        System.out.println(getNumber());
+        System.out.println(busyStudent(new int[]{1, 2, 3}, new int[]{3, 2, 7}, 4));
     }
 
     public static String solveEquation(String equation) {
@@ -639,5 +641,36 @@ class Solution {
         map.put(treeNode.val, false);
         makeMap(treeNode.left);
         makeMap(treeNode.right);
+    }
+
+    public static int busyStudent(int[] startTime, int[] endTime, int queryTime) {
+
+        int p1 = 0;
+        int p2;
+        while (p1 < startTime.length) {
+            if (startTime[p1] <= queryTime) {
+                p1++;
+            } else {
+                p1--;
+                break;
+            }
+
+        }
+        if (p1 == startTime.length) {
+            p1--;
+        }
+        p2 = p1;
+        while (p2 > 0) {
+            if (endTime[p2] >= queryTime) {
+                p2--;
+            } else {
+                p2++;
+                break;
+            }
+        }
+        if (p2 < 0) {
+            p2 = 0;
+        }
+        return p1 - p2 + 1;
     }
 }

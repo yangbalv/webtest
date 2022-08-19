@@ -18,5 +18,8 @@
         <property name="suffix" value=".jsp"/>
         <property name="order" value="1"/>
     </bean>
+    <bean class="com.webapp.mybatis.MybatisUtils">
+
+    </bean>
 </beans>
 

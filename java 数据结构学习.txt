@@ -1,0 +1,18 @@
+1.map
+	1.1map 常用的三类:
+	HashMap, Hashtable,  ConcurrentHashMap
+
+	HashMap 继承AbstractMap，实现 Map<K,V>, Cloneable, Serializable
+	Hashtable继承Dictionary，实现 Map<K,V>, Cloneable, Serializable
+	ConcurrentHashMap继承AbstractMap，实现 ConcurrentMap<K,V>,Serializable
+
+	HashMap 线程不安全，因为hashMap的实现类里面没有锁的设计，多线程情况下不安全。1.7版本hashmap 在扩容时会出现死循环，原理是hashMap的底层实现是数组加链表，
+	在扩容是使用头加法添加数据，a->b->c数据在阔容之后变成c->b->a，加上线程不安全，所以多线程扩容时出现死循环，1.8改用尾加法，就不会出现这样的问题。
+	ConcurrentHashMap 线程安全，1.7版本使用锁分段技术，1.8之后采用采用CAS和synchronized方式处理并发
+	Hashtable 线程安全，使用synchronized修饰方法
+
+
+
+
+ConcurrentMap继承map
+

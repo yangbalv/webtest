@@ -3,6 +3,7 @@ package com.webapp.dao;
 public class User {
     private String name;
     private String password;
+    private String id;
 
     public String getName() {
         return name;
@@ -26,5 +27,13 @@ public class User {
                 "name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
