@@ -7,6 +7,7 @@ import java.util.*;
 
 class Solution {
     public static void main(String[] args) {
+//        System.out.println(args[0]+args[1]);
 //        System.out.println(solveEquation("x+5-3+x=6+x-2"));
 //        System.out.println(reformat("12345abcdef"));
 //        System.out.println(minStartValue(new int[]{-3, 2, -3, 4, 2}));
@@ -18,7 +19,10 @@ class Solution {
 //        System.out.println(isPowerOfThree(27));
 //        forFor();
 //        System.out.println(reverse(-2147483412));
-        System.out.println(myAtoi("-91283472332"));
+//        System.out.println(myAtoi("2147483648"));
+        System.out.println(maxEqualFreq(new int[]{1, 2}));
+//        System.out.println(myAtoi("-2147483648"));
+//        System.out.println(getNumber());
     }
 
     public static String solveEquation(String equation) {
@@ -399,10 +403,10 @@ class Solution {
             if (c > '9' || c < '0') {
                 return res * type;
             }
-            if (res*type < Integer.MIN_VALUE / 10) {
+            if (res * type < Integer.MIN_VALUE / 10) {
                 return -2147483648;
             }
-            if (res*type > Integer.MAX_VALUE / 10) {
+            if (res * type > Integer.MAX_VALUE / 10) {
                 return 2147483647;
             }
             res = res * 10 + (c - '0');
@@ -471,4 +475,169 @@ class Solution {
         return null;
     }
 
+    public boolean isMatch(String s, String p) {
+        int m = s.length();
+        int n = p.length();
+
+        boolean[][] f = new boolean[m + 1][n + 1];
+        f[0][0] = true;
+        for (int i = 0; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                if (p.charAt(j - 1) == '*') {
+                    f[i][j] = f[i][j - 2];
+                    if (matches(s, p, i, j - 1)) {
+                        f[i][j] = f[i][j] || f[i - 1][j];
+                    }
+                } else {
+                    if (matches(s, p, i, j)) {
+                        f[i][j] = f[i - 1][j - 1];
+                    }
+                }
+            }
+        }
+        return f[m][n];
+    }
+
+    public boolean matches(String s, String p, int i, int j) {
+        if (i == 0) {
+            return false;
+        }
+        if (p.charAt(j - 1) == '.') {
+            return true;
+        }
+        return s.charAt(i - 1) == p.charAt(j - 1);
+    }
+
+
+    public static int maxEqualFreq(int[] nums) {
+        int res = 0;
+        int first = 0;
+        int firstNum = 0;
+        int second = 0;
+        int secondNum = 0;
+        int allKind = 0;
+        int only = 0;
+
+        Map<Integer, Integer> map = new HashMap<>();
+        int p = 0;
+        for (int i : nums) {
+            p++;
+            int t = 0;
+            if (!map.containsKey(i)) {
+                map.put(i, 1);
+                t = 1;
+                allKind++;
+                only++;
+            } else {
+                t = map.get(i) + 1;
+                map.put(i, t);
+            }
+
+            if (t == second) {
+                secondNum++;
+            } else if (t == first) {
+                firstNum++;
+                if (secondNum > 0) {
+                    secondNum--;
+                }
+            } else if (t > first) {
+                if (firstNum > 0) {
+                    firstNum--;
+                }
+                secondNum = firstNum;
+                second = first;
+                firstNum = 1;
+                first = t;
+            }
+
+            if (t == 2) {
+                only--;
+            }
+            if (firstNum == allKind - 1 && only == 1) {
+                res = p;
+            }
+
+            if (secondNum == allKind - 1) {
+                res = p;
+            }
+            if (first == 1) {
+                res = p;
+            }
+
+        }
+        return res;
+
+    }
+
+    public static String[] findRelativeRanks(int[] score) {
+        String[] ress = new String[score.length];
+        int[] results = new int[score.length];
+
+        for (int i = 0; i < score.length; i++) {
+            int res = 1;
+
+            for (int k = 0; k < score.length; k++) {
+                if (k == i) {
+                    continue;
+                } else if (score[k] > score[i]) {
+                    res++;
+                }
+
+            }
+            results[i] = res;
+        }
+        for (int i = 0; i < results.length; i++) {
+            if (results[i] == 1) {
+                ress[i] = "Gold Medal";
+            } else if (results[i] == 2) {
+                ress[i] = "Silver Medal";
+            } else if (results[i] == 3) {
+                ress[i] = "Bronze Medal";
+            } else {
+                ress[i] = String.valueOf(results[i]);
+            }
+
+
+        }
+        return ress;
+    }
+
+    public static Map<Integer, Boolean> map = new HashMap<>();
+
+    public static int getNumber(TreeNode root, int[][] ops) {
+        makeMap(root);
+        int res = 0;
+        for (int[] mode : ops) {
+            if (mode[0] == 0) {
+                for (int i = mode[1]; i <= mode[2]; i++) {
+                    if (map.containsKey(i)) {
+                        map.put(i, false);
+                    }
+
+                }
+            } else {
+                for (int i = mode[1]; i <= mode[2]; i++) {
+                    if (map.containsKey(i)) {
+                        map.put(i, true);
+                    }
+
+                }
+            }
+        }
+        for (Map.Entry entry : map.entrySet()) {
+            if ((Boolean) entry.getValue()) {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    public static void makeMap(TreeNode treeNode) {
+        if (treeNode == null) {
+            return;
+        }
+        map.put(treeNode.val, false);
+        makeMap(treeNode.left);
+        makeMap(treeNode.right);
+    }
 }
