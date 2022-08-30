@@ -25,6 +25,7 @@ class Solution {
 //        System.out.println(myAtoi("-2147483648"));
 //        System.out.println(getNumber());
         System.out.println(busyStudent(new int[]{1, 2, 3}, new int[]{3, 2, 7}, 4));
+
     }
 
     public static String solveEquation(String equation) {
@@ -673,4 +674,6 @@ class Solution {
         }
         return p1 - p2 + 1;
     }
+
+
 }
