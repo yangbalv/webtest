@@ -2,9 +2,7 @@ package com.webapp.leetcodePractice;
 
 import com.webapp.entity.TreeNode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Solution2 {
     public static void main(String[] args) {
@@ -14,10 +12,11 @@ public class Solution2 {
 //        System.out.println(solution2.constructMaximumBinaryTree(new int[]{12, 213, 213}));
 //        System.out.println(solution2.findKthPositive(new int[]{1, 2, 3, 4}, 2));
 //        System.out.println(solution2.search(new int[]{2, 5}, 5));
-        System.out.println(solution2.searchInsert(new int[]{1, 3, 5, 6}, 2));
+
 //        System.out.println(solution2.firstBadVersion(190));
 
-
+//        solution2.rotate(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, 2);
+        solution2.maxProfit2(new int[]{7, 2, 8, 1, 3, 1});
     }
 
 
@@ -187,14 +186,64 @@ public class Solution2 {
         if (k == 0) {
             return;
         }
+        Set<Integer> set = new HashSet<>();
         for (int i = 0; i < nums.length; i++) {
-            int target = i + k;
-            if (target >= nums.length) {
-                target = target % nums.length;
+            if (set.contains(i)) {
+                continue;
+            } else {
+                set.add(i);
             }
-            int mid = nums[target];
-            nums[target] = nums[i];
-            nums[i] = mid;
+            int target = i + k;
+            if (target > nums.length - 1) {
+                target = target - nums.length;
+            }
+            int before = nums[i];
+            int mid = 0;
+            while (true) {
+                if (target > nums.length - 1) {
+                    target = target - nums.length - 1;
+                }
+
+                if (target == i) {
+                    nums[i] = mid;
+                    break;
+                }
+                mid = nums[target];
+                nums[target] = before;
+                before = mid;
+                target = target + k;
+            }
+
         }
     }
+
+    public int maxProfit(int[] prices) {
+        int res = 0;
+        int min = prices[0];
+        int max = min;
+        for (int price : prices) {
+            if (price < min) {
+                min = price;
+                max = min;
+            } else if (price > max) {
+                max = price;
+                int mid = max - min;
+                res = Math.max(mid, res);
+            }
+        }
+        return res;
+    }
+    public int maxProfit2(int prices[]) {
+        int minprice = Integer.MAX_VALUE;
+        int maxprofit = 0;
+        for (int i = 0; i < prices.length; i++) {
+            if (prices[i] < minprice) {
+                minprice = prices[i];
+            } else if (prices[i] - minprice > maxprofit) {
+                maxprofit = prices[i] - minprice;
+            }
+        }
+        return maxprofit;
+    }
+
 }

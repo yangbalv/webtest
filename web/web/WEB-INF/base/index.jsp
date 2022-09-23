@@ -66,7 +66,7 @@
     <b id=></b>
 </div>
 <script>
-    var
+
 </script>
 </body>
 </html>
