@@ -5,6 +5,8 @@ import com.webapp.dto.LoginRequestDto;
 //import org.slf4j.LoggerFactory;
 import com.webapp.dto.RegisterRequestDto;
 import com.webapp.dto.RegisterResponseDto;
+import com.webapp.web.TestAOP;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -16,7 +16,11 @@ public class Solution2 {
 //        System.out.println(solution2.firstBadVersion(190));
 
 //        solution2.rotate(new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9}, 2);
-        solution2.maxProfit2(new int[]{7, 2, 8, 1, 3, 1});
+//        solution2.maxProfit2(new int[]{7, 2, 8, 1, 3, 1});
+//        System.out.println(solution2.commonFactors(885, 885));
+        System.out.println(solution2.maxSum(new int[][]{{6, 2, 1, 3}, {4, 2, 1, 5}, {9, 2, 8, 7}, {4, 1, 2, 9}}));
+//        count(885);
+
     }
 
 
@@ -233,6 +237,7 @@ public class Solution2 {
         }
         return res;
     }
+
     public int maxProfit2(int prices[]) {
         int minprice = Integer.MAX_VALUE;
         int maxprofit = 0;
@@ -246,4 +251,63 @@ public class Solution2 {
         return maxprofit;
     }
 
+    public int commonFactors(int a, int b) {
+        int mid = Math.min(a, b);
+
+        Set<Integer> set = new HashSet<>();
+        for (int i = 1; i <= mid; i++) {
+            if (a % i == 0 && b % i == 0) {
+                if (!set.contains(i)) {
+                    set.add(i);
+                }
+            }
+
+        }
+        return set.size();
+    }
+
+    static void count(int x) {
+        for (int i = 1; i <= x; i++) {
+            if (x % i == 0) {
+                System.out.println(i);
+            }
+        }
+
+    }
+
+    public int maxSum(int[][] grid) {
+        if (grid[0] == null) {
+            return 0;
+        }
+        int res = 0;
+        int length = grid[0].length;
+        int width = grid.length;
+        int l = 0;
+        int r = grid[0].length - 1;
+        int p = 1;
+        boolean num = true;
+        if (width % 2 != 0) {
+            num = false;
+        }
+        for (int i = 0; i < width; i++) {
+            for (int j = l; j <= r; j++) {
+                res += grid[i][j];
+            }
+            if (l == r || l == r - 1) {
+                if (num) {
+                    num = false;
+                } else {
+                    p = -1;
+                    l += p;
+                    r -= p;
+                }
+
+            }else {
+                l += p;
+                r -= p;
+            }
+
+        }
+        return res;
+    }
 }
